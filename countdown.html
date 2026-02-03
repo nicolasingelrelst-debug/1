@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compteur - Fonctionnaire Dirigeant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #d9534f; /* Ligne rouge pour l'urgence */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
+        }
+
+        #timer {
+            font-size: 60px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+
+        .labels {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+            width: 100px;
+        }
+        
+        .number {
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .text {
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Jours sans fonctionnaire dirigeant</h1>
+        
+        <div id="timer" class="labels">
+            <div class="unit">
+                <span id="days" class="number">0</span>
+                <span class="text">Jours</span>
+            </div>
+            <div class="unit">
+                <span id="hours" class="number">00</span>
+                <span class="text">Heures</span>
+            </div>
+            <div class="unit">
+                <span id="minutes" class="number">00</span>
+                <span class="text">Minutes</span>
+            </div>
+            <div class="unit">
+                <span id="seconds" class="number">00</span>
+                <span class="text">Secondes</span>
+            </div>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 0.9em; color: #888;">
+            Depuis le 31 octobre 2024 à 23:59:59
+        </p>
+    </div>
+
+    <script>
+        // Date de début : 31 octobre 2024 à 23:59:59
+        const startDate = new Date('2024-10-31T23:59:59').getTime();
+
+        function updateCounter() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            // Calculs pour jours, heures, minutes et secondes
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Mise à jour de l'affichage HTML
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }
+
+        // Mettre à jour toutes les secondes (1000 millisecondes)
+        setInterval(updateCounter, 1000);
+        
+        // Lancer immédiatement pour éviter le délai d'une seconde au chargement
+        updateCounter();
+    </script>
+</body>
+</html>
